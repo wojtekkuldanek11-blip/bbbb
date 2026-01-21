@@ -900,3 +900,60 @@ p.shine-effect.active {
 
 
 
+
+
+
+
+
+
+
+/* UKŁAD */
+.video-text-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+/* FILMY */
+.video-box {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+/* TEKST */
+.middle-text {
+  text-align: center;
+  line-height: 1.7;
+  font-size: 1.1rem; /* DOMYŚLNIE (tablet / mały ekran) */
+  max-width: 500px;
+  font-weight: 500;       
+}
+
+/* 🖥️ KOMPUTER / DUŻY EKRAN */
+@media (min-width: 1024px) {
+  .video-box {
+    max-width: 560px; /* WIĘKSZE FILMY */
+  }
+
+  .middle-text {
+    font-size: 1.85rem; /* WIĘKSZY TEKST */
+  }
+}
+
+/* 📱 TELEFON */
+@media (max-width: 900px) {
+  .video-text-section {
+    flex-direction: column;
+  }
+
+  .video-box {
+    max-width: 90%;
+  }
+
+  .middle-text {
+    font-size: 1.2rem; /* WIĘKSZY TEKST NA TEL */
+  }
+}
