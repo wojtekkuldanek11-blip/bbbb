@@ -1085,3 +1085,13 @@ p.shine-effect.active {
     display: none;
   }
 }
+
+
+
+
+h5 {
+  font-size: 1.6rem;   /* średnia wielkość */
+  font-weight: 700;    /* pogrubiony */
+  text-align: center;  /* wyśrodkowany */
+  margin: 20px 0;
+}
