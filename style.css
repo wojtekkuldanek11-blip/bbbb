@@ -153,7 +153,9 @@ a:focus-visible {
 
 
 
-/* GŁÓWNE STYLE DLA TEKSTU W HERO */
+
+
+/* GŁÓWNE STYLE DLA TEKSTU W HERO - USTAWIONY KOLOR CZERWONY */
 .hero-text h1 {
   font-size: clamp(60px, 10vw, 120px);
   letter-spacing: 4px;
@@ -161,55 +163,58 @@ a:focus-visible {
   font-weight: 900;
   margin: 0;
   line-height: 1.1;
+  color: #ff0000; /* Czerwony kolor bazowy */
 }
 
 .hero-text p {
   font-size: 26px;
   margin-top: 15px;
+  color: #ff0000; /* Czerwony kolor bazowy */
 }
 
-/* KLASA BŁYSKU - MUSI BYĆ OSOBNO (NIE W ŚRODKU INNYCH KLAS) */
+/* KLASA BŁYSKU - PODMIEŃ CAŁĄ TĘ SEKCJĘ (od ok. linii 117 do 155) */
 .shine-effect {
-  color: #fff;
   display: block;
   width: 100%;
   text-align: center;
   
-  /* Ustawienie gradientu */
+  /* Gradient: Czerwony -> Biały (błysk) -> Czerwony */
   background: linear-gradient(
     110deg, 
-    rgba(255,255,255,1) 35%, 
-    rgb(67, 66, 69) 50%, 
-    rgba(255,255,255,1) 65%
+    #ff0000 35%, 
+    #ffffff 50%, 
+    #ff0000 65%
   );
   background-size: 250% 100%;
   background-position: 150% 0;
   
-  /* Wycięcie tła do tekstu */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* Startujemy od niewidoczności dla efektu wejścia */
   opacity: 0;
-  transition: opacity 3s ease; 
+  transition: opacity 2s ease; 
 }
 
-/* WYZWALACZ: Start animacji po dodaniu klasy active przez JS */
+/* ZAPĘTLONA ANIMACJA CO 3 SEKUNDY */
 .reveal.active.shine-effect {
   opacity: 1;
-  animation: shineOnce 2s ease-in-out 0.5s 1 forwards;
+  animation: shineLoop 3s linear infinite; /* infinite = zapętlenie */
 }
 
-/* Osobne opóźnienie dla dolnego napisu (żeby błysnął później) */
+/* Wyłączenie opóźnienia, żeby oba napisy błyskały w tym samym rytmie */
 p.shine-effect.active {
-  animation-delay: 1.2s !important; 
+  animation-delay: 0s !important; 
 }
 
 /* DEFINICJA RUCHU BŁYSKU */
-@keyframes shineOnce {
+@keyframes shineLoop {
   0% {
     background-position: 150% 0;
+  }
+  /* Błysk przebiega w 2 sekundy (do 66%), potem 1 sekunda przerwy do pełnych 3s */
+  66% {
+    background-position: -50% 0;
   }
   100% {
     background-position: -50% 0;
@@ -1217,3 +1222,5 @@ h5 {
     aspect-ratio: 4 / 3;
   }
 }
+
+
