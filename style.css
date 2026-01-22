@@ -37,6 +37,20 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -986,16 +1000,6 @@ p.shine-effect.active {
 
 
 
-
-
-
-
-
-
-
-
-
-
 .pricing {
   background: #000000;
   color: #fff;
@@ -1085,8 +1089,6 @@ p.shine-effect.active {
     display: none;
   }
 }
-
-
 
 
 h5 {
