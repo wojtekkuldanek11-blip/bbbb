@@ -755,32 +755,47 @@ p.shine-effect.active {
 
 
 
-
-
-
-
-
-
 .premium-tile {
   position: relative;
-  width: 540px;      /* ⬅ szerokość kafelka */
+  width: 100%;
+  max-width: 540px;
   height: 460px;
   border-radius: 38px;
-  overflow: hidden;
+  display: block;
   text-decoration: none;
   color: white;
-  display: block;
+
+  /* --- OSTATECZNY FIX NA ROGI --- */
+  overflow: hidden;
+  /* Wymusza na Safari przestrzeganie obramowania za pomocą maski */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  /* Wymusza renderowanie 2D dla stabilności maski */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  /* Usuwa artefakty przy krawędziach */
+  mask-clip: content-box;
 }
 
-
-/* OBRAZEK */
 .tile-bg {
   position: absolute;
-  inset: 0;
+  inset: 0; /* Zamiast top:0, left:0 itd. */
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   transition: transform 0.8s ease;
   z-index: 0;
+
+  /* Dodatkowe zabezpieczenie: obrazek też musi mieć rogi */
+  border-radius: inherit; 
+  -webkit-backface-visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .premium-tile, .tile-bg {
+    border-radius: 24px;
+    height: 380px;
+  }
 }
 
 /* CIEMNA WARSTWA */
@@ -795,13 +810,13 @@ p.shine-effect.active {
   z-index: 1;
 }
 
-/* RAMKA GRADIENT */
 .premium-tile::before {
   content: "";
   position: absolute;
-  inset: 0;
+  /* Ustawienie na 1px lub 0.5px tworzy idealne domknięcie */
+  inset: 0.5px; 
   padding: 7px;
-  border-radius: 38px;
+  border-radius: inherit; /* Pobierze 38px lub 24px z rodzica */
   background: linear-gradient(135deg, #959299, #944f80);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -1174,51 +1189,100 @@ h5 {
 
 
 
-
-
-
-
-
-
-
-
-
 /* === PODSTRONA SLIDER === */
 .sub-slider {
   width: 100%;
-  max-width: 520px;
-  aspect-ratio: 1680 / 1350;
+  max-width: 720px;
+  /* Usuwamy aspect-ratio, żeby wysokość była elastyczna */
   position: relative;
   overflow: hidden;
   border-radius: 16px;
-  background: #111;
+  background: transparent; /* Brak czarnych pasków - tło zlewa się ze stroną */
   margin: 0 auto;
+  
+  /* Ważne: musimy nadać minimalną wysokość, żeby slider nie zniknął */
+  min-height: 300px; 
 }
 
 .sub-slider .slide {
-  position: absolute;
-  inset: 0;
+  /* Zmieniamy z absolute na relative w wersji podstawowej, 
+     żeby pierwszy obrazek nadał wysokość kontenerowi */
+  position: relative;
+  display: none; /* Ukrywamy wszystkie */
   width: 100%;
-  height: 100%;
-  object-fit: scale-down;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  height: auto;
+  
+  /* object-fit: contain - zdjęcie widać w całości, nic nie jest ucięte */
+  object-fit: contain; 
+  border-radius: inherit;
 }
 
+/* Wyświetlamy tylko aktywny slajd */
 .sub-slider .slide.active {
+  display: block;
   opacity: 1;
 }
 
 /* MOBILE */
 @media (max-width: 900px) {
-  .image-text-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-
   .sub-slider {
     max-width: 100%;
-    aspect-ratio: 4 / 3;
+    min-height: auto; /* Na mobile pozwalamy mu się kurczyć */
+    border-radius: 12px;
+  }
+
+  .sub-slider .slide {
+    /* Na telefonie 'contain' gwarantuje, że zobaczysz cały kadr */
+    object-fit: contain;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* === PILL TITLE – PEŁNA SZARA PIGUŁKA === */
+.pill-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 22px 90px;
+  border-radius: 999px;
+
+  background: #d6d6d6; /* mocniejszy szary */
+  color: #000;
+
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+/* IDEALNE WYŚRODKOWANIE */
+.section {
+  text-align: center;
+}
+
+.section .pill-title {
+  margin: 0 auto 70px;
+  width: fit-content;
+}
+
+/* 📱 TELEFON */
+@media (max-width: 768px) {
+  .pill-title {
+    padding: 16px 48px;
+    font-size: 28px;
+    letter-spacing: 2px;
+  }
+}
+
+
+
+
